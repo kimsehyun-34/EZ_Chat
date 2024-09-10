@@ -1,9 +1,10 @@
 const express = require('express');
-const http = require('http');
 const socketIo = require('socket.io');
 
 const app = express();
-const server = http.createServer(app);
+const server = app.listen(8080, '0.0.0.0', () => {
+    console.log('실행: http://localhost:8080');
+});
 const io = socketIo(server);
 
 app.use('/public', express.static('public'));
@@ -22,8 +23,4 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('사용자 연결 끊김');
     });
-});
-
-server.listen(8080, '0.0.0.0', () => {
-    console.log('실행: http://localhost:8080');
 });
